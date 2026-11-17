@@ -1,0 +1,448 @@
+{
+ "updated": "2026-11-17T07:50:59.673Z",
+ "sample": true,
+ "talents": [
+  {
+   "slug": "aini",
+   "name": "Aini",
+   "ig": "rainaini.voices",
+   "photo": null,
+   "tagline": {
+    "id": "Suara anak, karakter animasi & iklan",
+    "en": "Kid voices, animated characters & commercials",
+    "zh": "童声、动画角色与广告配音"
+   },
+   "bio": {
+    "id": "Pengisi suara yang berpengalaman di short drama, serial animasi YouTube, animasi, dan iklan. Paling sering memerankan anak perempuan dan anak laki-laki, juga karakter animasi yang ceria. Merekam secara remote.",
+    "en": "Voice actor with credits in short dramas, animated YouTube series, animation and commercials. Most often cast as young girls and boys, and as cheerful animated characters. Records remotely.",
+    "zh": "拥有短剧、YouTube 动画系列、动画及广告配音经验。常配小女孩、小男孩以及活泼的动画角色。远程录音。"
+   },
+   "tags": [
+    {
+     "k": "kid",
+     "id": "Suara anak",
+     "en": "Kid",
+     "zh": "童声"
+    },
+    {
+     "k": "cute",
+     "id": "Imut",
+     "en": "Cute",
+     "zh": "可爱"
+    },
+    {
+     "k": "cheerful",
+     "id": "Ceria",
+     "en": "Cheerful",
+     "zh": "活泼"
+    },
+    {
+     "k": "toon",
+     "id": "Karakter animasi",
+     "en": "Animated character",
+     "zh": "动画角色"
+    },
+    {
+     "k": "singer",
+     "id": "Bisa bernyanyi",
+     "en": "Singer",
+     "zh": "会唱歌"
+    }
+   ],
+   "avail": true,
+   "voice": [
+    {
+     "k": "fLang",
+     "v": {
+      "id": "Bahasa Indonesia (native)",
+      "en": "Indonesian (native)",
+      "zh": "印尼语（母语）"
+     }
+    },
+    {
+     "k": "fAge",
+     "v": {
+      "id": "Anak 4–10 tahun, remaja, wanita muda",
+      "en": "Kids 4–10, teens, young women",
+      "zh": "4–10 岁儿童、青少年、年轻女性"
+     }
+    },
+    {
+     "k": "fTz",
+     "v": "WIB (UTC+7)"
+    }
+   ],
+   "skills": [
+    {
+     "id": "Bernyanyi",
+     "en": "Singing",
+     "zh": "唱歌"
+    },
+    {
+     "id": "Akting menangis & berteriak",
+     "en": "Crying & screaming",
+     "zh": "哭戏与尖叫"
+    },
+    {
+     "id": "Suara sistem / AI",
+     "en": "System / AI voice",
+     "zh": "系统音 / AI"
+    }
+   ],
+   "reel": null,
+   "samples": [],
+   "samplesAll": null,
+   "videos": [
+    {
+     "url": "https://www.youtube.com/watch?v=w6TqP6ojKas&t=28s"
+    },
+    {
+     "url": "https://drive.google.com/file/d/1Vzzdca0AiWH6oGEOBGNGEdKoCMuJhds5/view?usp=sharing"
+    }
+   ],
+   "clients": [
+    "Kolam Susu"
+   ],
+   "community": [
+    {
+     "n": "Echo-Lab Voice Acting Club"
+    }
+   ],
+   "studio": {
+    "photo": null,
+    "mic": [
+     "Audio-Technica ATR2100x",
+     "Audio-Technica AT2035",
+     "Marantz Professional MPM-2000U"
+    ],
+    "iface": "Arturia MiniFuse 4",
+    "hp": [
+     "Sony MDR-7506",
+     "Dolphin Sound DS-50"
+    ],
+    "pc": "Asus Vivobook S14 · Ryzen 9 · RAM 32 GB · Windows",
+    "daw": "Reaper",
+    "room": {
+     "id": "Panel absorber (6 panel)",
+     "en": "Absorber panels (6 panels)",
+     "zh": "吸音板（6 块）"
+    },
+    "acc": {
+     "id": "Stand mic Samson, pop filter Samson",
+     "en": "Samson mic stand, Samson pop filter",
+     "zh": "Samson 麦克风支架、Samson 防喷罩"
+    },
+    "file": "WAV, MP3",
+    "session": [
+     "Zoom",
+     "Google Meet"
+    ],
+    "sync": true
+   },
+   "works": [
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Putri Hoki Sang Jendral",
+      "en": "The General's Lucky Princess"
+     },
+     "orig": "督军,你家小福包有祖传乌鸦嘴",
+     "role": {
+      "id": "Yaya"
+     },
+     "cast": "main",
+     "platform": "Melolo",
+     "link": "https://www.melolo.org/page/share-drama?sid=7284644875541150922&vid=7284498350638890234&lang=id&did=7369489688081282795",
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Mantan Istriku Memohon Rujuk",
+      "en": "My Ex-Wife Begs to Reconcile",
+      "zh": "前妻求复合"
+     },
+     "orig": null,
+     "role": {
+      "id": "Gadis dalam Lukisan",
+      "en": "Girl in the Painting",
+      "zh": "画中少女"
+     },
+     "cast": "extra",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Ghar Wapsi"
+     },
+     "orig": null,
+     "role": {
+      "id": "Little Ajju"
+     },
+     "cast": "extra",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Anjing Desa Jadi Raja Anjing",
+      "en": "Farm Dog Becomes Dog King"
+     },
+     "orig": "农家犬登顶成犬王",
+     "role": {
+      "id": "Perempuan 1 (Sistem)",
+      "en": "Female 1 (System)",
+      "zh": "女1（系统）"
+     },
+     "cast": "support",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Bangkit Dari Luka",
+      "en": "Rising From the Wound",
+      "zh": "从伤痛中崛起"
+     },
+     "orig": null,
+     "role": {
+      "id": "Gadis 1 (Melati)",
+      "en": "Girl 1 (Melati)",
+      "zh": "女孩1（茉莉）"
+     },
+     "cast": "extra",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Mama, Papa Adalah Penunggang Naga Tertinggi",
+      "en": "Mommy, Daddy is the Supreme Dragonrider",
+      "zh": "妈咪，爹地是至尊龙骑士"
+     },
+     "orig": null,
+     "role": {
+      "id": "Aurora"
+     },
+     "cast": "support",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Setelah Surat Cerai, Aku Bawa Keluarga Ibuku Kaya Raya",
+      "en": "After the Divorce Letter, I Made My Mother's Family Rich"
+     },
+     "orig": "一纸休书后-我带娘家暴富",
+     "role": {
+      "id": "Putra"
+     },
+     "cast": "extra",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Gadis Bisu dengan Kekuatan Sakti",
+      "en": "The Mute Girl with Sacred Powers"
+     },
+     "orig": "言灵一诺,岁岁静安",
+     "role": {
+      "id": "Putri Nirmala Kecil",
+      "en": "Young Princess Nirmala",
+      "zh": "小公主妮尔玛拉"
+     },
+     "cast": "extra",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Gadis Bisu dengan Kekuatan Sakti",
+      "en": "The Mute Girl with Sacred Powers"
+     },
+     "orig": "言灵一诺,岁岁静安",
+     "role": {
+      "id": "Gadis 1",
+      "en": "Girl 1",
+      "zh": "女孩1"
+     },
+     "cast": "extra",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Jangan Sentuh Cucu Pengacara Legendaris",
+      "en": "Don't Touch the Legendary Lawyer's Grandson",
+      "zh": "别碰传奇律师的孙子"
+     },
+     "orig": null,
+     "role": {
+      "id": "Theo"
+     },
+     "cast": "extra",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Boss Biwi Dabangg Pati"
+     },
+     "orig": null,
+     "role": {
+      "id": "Amayra"
+     },
+     "cast": "support",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "drama",
+     "title": {
+      "id": "Akhiri Rasta"
+     },
+     "orig": null,
+     "role": {
+      "id": "Dia"
+     },
+     "cast": "extra",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "animation",
+     "title": {
+      "id": "Petualangan ke Planet Susu Jeli Kun Kun",
+      "en": "Adventure to Kun Kun Jelly Milk Planet",
+      "zh": "Kun Kun 果冻牛奶星球历险记"
+     },
+     "orig": null,
+     "role": {
+      "id": "Talka / Bawel"
+     },
+     "cast": "main",
+     "platform": "YouTube · LOF KUN Indonesia",
+     "link": "https://www.youtube.com/watch?v=w6TqP6ojKas&t=28s",
+     "img": null,
+     "note": {
+      "id": "8 episode",
+      "en": "8 episodes",
+      "zh": "共8集"
+     }
+    },
+    {
+     "cat": "commercial",
+     "title": {
+      "id": "Iklan Finna Food (Sambel Uleg Spesial Lebaran)",
+      "en": "Finna Food commercial (Sambel Uleg Lebaran Special)",
+      "zh": "Finna Food 广告（开斋节特别版）"
+     },
+     "orig": null,
+     "role": {
+      "id": "Nina"
+     },
+     "cast": null,
+     "platform": "YouTube / Instagram",
+     "link": "https://drive.google.com/file/d/1Vzzdca0AiWH6oGEOBGNGEdKoCMuJhds5/view?usp=sharing",
+     "img": null,
+     "note": null
+    },
+    {
+     "cat": "commercial",
+     "title": {
+      "id": "VO Dongeng",
+      "en": "Fairy tale VO",
+      "zh": "童话故事配音"
+     },
+     "orig": null,
+     "role": {
+      "id": "Pomi"
+     },
+     "cast": null,
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": {
+      "id": "Belum rilis",
+      "en": "Not yet released",
+      "zh": "尚未发布"
+     }
+    },
+    {
+     "cat": "interactive",
+     "title": {
+      "id": "Baby Bus Encyclopedia"
+     },
+     "orig": null,
+     "role": {
+      "id": "Lia"
+     },
+     "cast": "main",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": {
+      "id": "Buku bunyi interaktif · dry dubbing",
+      "en": "Interactive sound book · dry dubbing",
+      "zh": "互动有声书 · 干音录制"
+     }
+    },
+    {
+     "cat": "animation",
+     "title": {
+      "id": "Lili Putih",
+      "en": "White Lily",
+      "zh": "白百合"
+     },
+     "orig": null,
+     "role": {
+      "id": "Mika"
+     },
+     "cast": "main",
+     "platform": null,
+     "link": null,
+     "img": null,
+     "note": {
+      "id": "Proyek mahasiswa ISI",
+      "en": "ISI arts university student project",
+      "zh": "印尼艺术学院学生作品"
+     }
+    }
+   ]
+  }
+ ]
+}
