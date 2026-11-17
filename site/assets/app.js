@@ -5,7 +5,7 @@ const I18N={
   heroEye:"Kolektif pengisi suara · Indonesia",heroH:"Suara yang <em>menghidupkan</em> cerita.",
   heroP:"Pengisi suara untuk dubbing short drama, animasi, commercial, audiobook, buku interaktif, dan narasi. Semua talent merekam secara remote, jadi bisa bekerja sama dari mana saja. Pilih talent, dengarkan sampelnya, lalu DM Instagram talent langsung.",
   ctaTalents:"Lihat semua talent",ctaHow:"Cara booking",boothL:"Rekaman remote",recording:"REC",
-  stTalent:"talent",stTitles:"judul dikerjakan",stLang:"bahasa",
+  stTalent:"talent",stTitles:"judul dikerjakan",stCats:"kategori",
   svcEye:"Layanan",svcH:"Yang kami kerjakan",
   svcDesc:{drama:"Dubbing drama pendek vertikal",animation:"Kartun, anime & serial animasi YouTube",commercial:"Iklan, konten brand & proyek klien",audiobook:"Audiobook, dongeng & cerita anak",interactive:"Buku bunyi, mainan & aplikasi belajar anak",narration:"Video profil, dokumenter & e-learning"},
   titles:"judul",
@@ -34,7 +34,7 @@ const I18N={
   heroEye:"Voice acting collective · Indonesia",heroH:"Voices that <em>bring</em> stories to life.",
   heroP:"Voice actors for short drama dubbing, animation, commercials, audiobooks, interactive books and narration. Everyone records remotely, so we can work with you from anywhere. Pick a talent, hear their sample, then DM them on Instagram.",
   ctaTalents:"See all talent",ctaHow:"How to book",boothL:"Remote recording",recording:"REC",
-  stTalent:"talents",stTitles:"titles voiced",stLang:"languages",
+  stTalent:"talents",stTitles:"titles voiced",stCats:"categories",
   svcEye:"Services",svcH:"What we voice",
   svcDesc:{drama:"Vertical short drama dubbing",animation:"Cartoons, anime & animated YouTube series",commercial:"Ads, brand content & client projects",audiobook:"Audiobooks, fairy tales & kids' stories",interactive:"Sound books, toys & kids' learning apps",narration:"Company profiles, documentaries & e-learning"},
   titles:"titles",
@@ -63,7 +63,7 @@ const I18N={
   heroEye:"印度尼西亚 · 配音团队",heroH:"用声音<em>演绎</em>故事。",
   heroP:"我们的配音演员承接短剧、动画、商业配音、有声书、互动绘本与旁白解说的印尼语配音。所有演员均远程录音，可与各地团队合作。选择演员、试听样音，然后直接通过 Instagram 私信联系演员。",
   ctaTalents:"查看全部演员",ctaHow:"预约方式",boothL:"远程录音",recording:"REC",
-  stTalent:"位演员",stTitles:"部作品",stLang:"种语言",
+  stTalent:"位演员",stTitles:"部作品",stCats:"类别",
   svcEye:"服务",svcH:"配音项目类型",
   svcDesc:{drama:"竖屏短剧印尼语配音",animation:"卡通、动漫与 YouTube 动画系列",commercial:"广告、品牌内容与客户项目",audiobook:"有声书、童话与儿童故事",interactive:"有声绘本、玩具与儿童学习应用",narration:"企业宣传片、纪录片与网课"},
   titles:"部",
@@ -201,7 +201,7 @@ function viewHome(){
      <div class="ctas"><a class="btn primary" href="/#talents">${t("ctaTalents")}</a><a class="btn" href="/#how">${t("ctaHow")}</a></div></div>
     <div class="booth" aria-hidden="true"><div class="booth-head"><span>${t("boothL")}</span><span class="onair"><i></i>${t("recording")}</span></div>
      <div class="wave">${wave()}</div>
-     <div class="booth-stats"><div><b>${TALENTS.length}</b><span>${t("stTalent")}</span></div><div><b>${works.length}</b><span>${t("stTitles")}</span></div><div><b>3</b><span>${t("stLang")}</span></div></div></div>
+     <div class="booth-stats"><div><b>${TALENTS.length}</b><span>${t("stTalent")}</span></div><div><b>${works.length}</b><span>${t("stTitles")}</span></div><div><b>${new Set(works.map(w=>w.cat)).size}</b><span>${t("stCats")}</span></div></div></div>
   </div></section>
   <section class="band alt"><div class="wrap"><div class="sec-head"><div><div class="eyebrow">${t("svcEye")}</div><h2>${t("svcH")}</h2></div></div>
    <div class="services">${Object.keys(CATS).map(c=>`<div class="svc"><b>${L(CATS[c])}</b><span>${t("svcDesc")[c]}</span><span class="n">${works.filter(w=>w.cat===c).length} ${t("titles")}</span></div>`).join("")}</div></div></section>
