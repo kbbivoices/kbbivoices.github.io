@@ -193,7 +193,7 @@ section.band.alt{background:var(--sunk)}
 .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
 .vcard{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:8px;min-width:0}
 .vcard:focus-visible .vthumb{outline:3px solid var(--sun);outline-offset:2px}
-.vthumb{aspect-ratio:4/5;max-width:100%;border-radius:12px;border:1px solid var(--line);background:linear-gradient(165deg,var(--sunk),var(--surface) 70%);position:relative;display:grid;place-items:center;overflow:hidden}
+.vthumb{aspect-ratio:4/5;max-width:100%;border-radius:12px;border:1px solid var(--line);--th:none;background:var(--th) center/cover no-repeat,linear-gradient(165deg,var(--sunk),var(--surface) 70%);position:relative;display:grid;place-items:center;overflow:hidden}
 .vthumb .pf{position:absolute;top:8px;left:8px;font-size:11px;font-weight:800;letter-spacing:.06em;padding:4px 8px;border-radius:6px;background:var(--ink);color:var(--bg)}
 .vthumb .example{position:absolute;top:8px;right:8px}
 .vthumb .play{width:52px;height:52px;box-shadow:var(--shadow);transition:transform .15s}
@@ -246,7 +246,7 @@ button.watch:focus-visible{outline:2px solid var(--sun-ink);outline-offset:2px}
 .reelcard{all:unset;cursor:pointer;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:24px;align-items:center;width:100%;box-sizing:border-box;padding:16px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
 .reelcard:hover{border-color:var(--sun-ink)}
 .reelcard:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
-.reelthumb{aspect-ratio:16/9;max-width:100%;border-radius:14px;background:radial-gradient(120% 120% at 20% 10%,var(--sun) 0,var(--sunk) 55%,var(--surface) 100%);display:grid;place-items:center;position:relative}
+.reelthumb{aspect-ratio:16/9;max-width:100%;border-radius:14px;--th:none;background:var(--th) center/cover no-repeat,radial-gradient(120% 120% at 20% 10%,var(--sun) 0,var(--sunk) 55%,var(--surface) 100%);display:grid;place-items:center;position:relative}
 .reelthumb .play{width:64px;height:64px;background:var(--ink);color:var(--bg)}
 .reelthumb .play svg{width:26px;height:26px}
 .reelthumb .example{position:absolute;top:10px;left:10px}

@@ -152,6 +152,8 @@ function openMedia(title,url){
 function closePlayer(){const d=document.getElementById("player");d.innerHTML="";d.close?d.close():d.removeAttribute("open")}
 function miniWave(seed){let s="";for(let i=0;i<48;i++){const h=20+Math.abs(Math.sin((i+seed*7)*.6)*Math.cos(i*.23+seed))*80;s+=`<i style="height:${h.toFixed(0)}%"></i>`}return s}
 function wave(){let s="";for(let i=0;i<44;i++){const h=18+Math.abs(Math.sin(i*.55)*Math.cos(i*.21))*82+((i*37)%11);s+=`<span style="height:${Math.min(100,h).toFixed(0)}%;animation-delay:${(i%9)*-.18}s"></span>`}return s}
+const thumbOf=(url,img)=>{if(img)return img;const m=mediaOf(url);if(!m)return "";if(m.p==="youtube")return "https://i.ytimg.com/vi/"+m.id+"/hqdefault.jpg";if(m.p==="drive")return "https://drive.google.com/thumbnail?id="+m.id+"&sz=w1000";return ""};
+const thStyle=u=>u?`--th:url(${cssUrl(u)})`:"";
 const bgImg=u=>u?`background-image:url(${cssUrl(u)});background-size:cover;background-position:center`:"";
 const avatar=x=>x.photo?`<span class="avatar" style="${bgImg(x.photo)}" role="img" aria-label="${esc(x.name)}"></span>`:`<span class="mono">${esc(initials(x.name))}</span>`;
 
@@ -238,8 +240,7 @@ function portfolioBlock(x){
 }
 function demoBlock(x){
   if(!x.reel||!x.reel.url)return "";
-  const m=mediaOf(x.reel.url);
-  const th=m&&m.p==="youtube"?bgImg("https://i.ytimg.com/vi/"+m.id+"/hqdefault.jpg"):"";
+  const th=thStyle(thumbOf(x.reel.url,x.reel.img));
   return `<section class="band" style="padding-bottom:0"><div class="wrap">
    <button type="button" class="reelcard" data-reel><div class="reelthumb" style="${th}"><span class="play">${ICON.play}</span></div>
    <div><div class="eyebrow">${t("demoEye")}</div><h3>${t("demoH")}</h3><p>${t("demoSub")}</p></div></button></div></section>`;
@@ -264,7 +265,7 @@ function videosBlock(x){
   if(!x.videos.length)return "";
   return `<section class="band" style="padding-bottom:0"><div class="wrap"><div class="eyebrow">${t("vidEye")}</div><h2 class="sec-title">${t("vidH")}</h2>
    <div class="vgrid">${x.videos.map((v,i)=>{const m=mediaOf(v.url),p=PLAT[m?m.p:"link"];
-     const th=v.img?bgImg(v.img):m&&m.p==="youtube"?bgImg("https://i.ytimg.com/vi/"+m.id+"/hqdefault.jpg"):"";
+     const th=thStyle(thumbOf(v.url,v.img));
      return `<button type="button" class="vcard" data-video="${i}"><div class="vthumb" style="${th}"><span class="pf">${p.n}</span><span class="play">${ICON.play}</span></div><b>${v.title?esc(L(v.title)):t("video")+" "+(i+1)}</b><small>${p.n}</small></button>`}).join("")}</div></div></section>`;
 }
 function credsBlock(x){

@@ -166,7 +166,7 @@ function buildProfileForm_() {
   checks_(f, Q.skills, '', ['Bernyanyi', 'Akting menangis & berteriak', 'Efek suara / suara makhluk', 'Suara sistem / AI', 'Banyak karakter (multi-voice)'], false, true);
 
   page_(f, 'Voice sample & video', 'Link YouTube atau Google Drive. Voice sample di Drive: matikan opsi download untuk viewer.');
-  text_(f, Q.reel, 'Video/audio 60–90 detik berisi potongan terbaikmu. Tampil paling atas di profil.');
+  text_(f, Q.reel, 'Video/audio 60–90 detik berisi potongan terbaikmu. Tampil paling atas di profil. Mau pakai gambar sampul sendiri? Format: link video | link gambar (YouTube & video Drive: sampul otomatis).');
   text_(f, Q.raw, 'Rekaman langsung dari mic tanpa noise reduction & EQ, supaya klien bisa menilai kualitas ruangan.');
   text_(f, Q.s1t, 'Contoh: Anak perempuan · ceria');
   text_(f, Q.s1l, DRIVE_HELP);
@@ -312,7 +312,7 @@ function talentObj_(slug, r, T) {
     avail: str_(r[Q.avail]) === 'Tersedia untuk proyek baru',
     voice: voice,
     skills: list_(r[Q.skills]).map(s => T.all(s)),
-    reel: str_(r[Q.reel]) ? { url: str_(r[Q.reel]) } : null,
+    reel: reel_(r[Q.reel]),
     samples: samples,
     samplesAll: str_(r[Q.allS]) || null,
     videos: videos_(r[Q.vids], T),
@@ -394,6 +394,12 @@ function str_(v) { return v == null ? '' : String(v).trim(); }
 function list_(v) { return str_(v).split(/\s*[,\n]\s*/).filter(Boolean); }
 function slugify_(s) {
   return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+/* Demo reel: "link video" atau "link video | link gambar sampul". */
+function reel_(v) {
+  const urls = str_(v).split('|').map(s => s.trim()).filter(s => /^https?:\/\//.test(s));
+  if (!urls.length) return null;
+  return urls[1] ? { url: urls[0], img: img_(urls[1]) } : { url: urls[0] };
 }
 /* Satu video per baris: "Judul | link video | link gambar sampul". Judul & gambar opsional; link saja juga boleh. */
 function videos_(v, T) {
