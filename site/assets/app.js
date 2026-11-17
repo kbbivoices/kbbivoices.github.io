@@ -183,7 +183,7 @@ function directBlock(){
 }
 function contactBlock(x){
   const ig=encodeURIComponent(x.ig||"");
-  const box=x.ig?`<a class="btn primary" href="https://ig.me/m/${ig}" target="_blank" rel="noopener">${ICON.ig}${t("ctBtn")} @${esc(x.ig)}</a>
+  const box=x.ig?`<a class="btn primary" href="https://www.instagram.com/${ig}/" target="_blank" rel="noopener">${ICON.ig}${t("ctBtn")} @${esc(x.ig)}</a>
     <div class="handle"><code>@${esc(x.ig)}</code><button type="button" data-copy="@${esc(x.ig)}">${t("ctCopy")}</button></div>`
     :`<div class="handle"><code>${t("ctNoIg")}</code></div>`;
   return `<section class="band" id="contact"><div class="wrap"><div class="contact">
