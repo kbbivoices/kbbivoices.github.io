@@ -175,7 +175,7 @@ function buildProfileForm_() {
   text_(f, Q.s3t, '');
   text_(f, Q.s3l, '');
   text_(f, Q.allS, 'Link Google Sheet atau folder Drive berisi semua voice sample-mu.');
-  para_(f, Q.vids, 'Satu video per baris, maksimal 6. Format: Judul | link video | link gambar sampul. Judul & gambar boleh dikosongkan (YouTube: sampul otomatis). Contoh: Kun Kun eps. 3 | https://youtu.be/xxxx. Bisa YouTube, TikTok, Instagram Reels, atau Google Drive.');
+  para_(f, Q.vids, 'Satu video per baris, maksimal 10. Format: Judul | link video | link gambar sampul. Judul & gambar boleh dikosongkan (YouTube: sampul otomatis). Contoh: Kun Kun eps. 3 | https://youtu.be/xxxx. Bisa YouTube, TikTok, Instagram Reels, atau Google Drive.');
 
   page_(f, 'Home studio', 'Klien perlu yakin kualitas rekaman remote-mu.');
   text_(f, Q.mic, 'Pisahkan dengan koma kalau lebih dari satu. Contoh: Audio-Technica AT2035, Rode NT1');
@@ -420,7 +420,7 @@ function videos_(v, T) {
     const title = urls.length === 1 ? line.replace(urls[0], '').replace(/^[\s|,:;–—-]+|[\s|,:;–—-]+$/g, '') : '';
     urls.forEach(u => out.push(title ? { url: u, title: T.all(title) } : { url: u }));
   });
-  return out.slice(0, 6);
+  return out.slice(0, 10);
 }
 function img_(v) {
   const s = str_(v);
