@@ -20,7 +20,7 @@ const I18N={
   reelEye:"Video",reelH:"Reels & video publik",
   ctH:"Tanya rate card",ctP:"Kirim DM Instagram langsung ke talent. Agar cepat dibalas, sertakan:",
   ct1:"Judul proyek & platform",ct2:"Karakter yang akan diisi",ct3:"Durasi naskah & deadline",
-  ctBtn:"DM Instagram",ctCopy:"Salin",ctNote:"Penawaran tidak melalui WhatsApp publik.",ctNoIg:"Instagram talent ini belum diisi.",
+  ctBtn:"DM Instagram",ctCopy:"Salin",ctNoIg:"Instagram talent ini belum diisi.",
   homeCtH:"Hubungi talent langsung",homeCtP:"Setiap talent menerima pertanyaan rate card lewat DM Instagram pribadinya. Pilih talent, lalu tekan tombol DM di halaman profilnya.",homeCtBtn:"Pilih talent",
   stEye:"Home studio",stH:"Gear & setup rekaman",stPhoto:"Foto home studio / booth rekaman",gMic:"Mikrofon",gIf:"Audio interface",gHp:"Headphone",gPc:"Komputer",gDaw:"DAW",gRoom:"Room treatment",gAcc:"Aksesoris",gFile:"Format file",gSess:"Sesi live-directed",
   allSamples:"Lihat semua voice sample",allSamplesSub:"Daftar lengkap di {p}",
@@ -49,7 +49,7 @@ const I18N={
   reelEye:"Video",reelH:"Reels & public videos",
   ctH:"Ask for a rate card",ctP:"DM the talent directly on Instagram. For a quick reply, include:",
   ct1:"Project title & platform",ct2:"Characters to voice",ct3:"Script length & deadline",
-  ctBtn:"Instagram DM",ctCopy:"Copy",ctNote:"Offers are not taken through public WhatsApp.",ctNoIg:"This talent's Instagram hasn't been added yet.",
+  ctBtn:"Instagram DM",ctCopy:"Copy",ctNoIg:"This talent's Instagram hasn't been added yet.",
   homeCtH:"Contact talent directly",homeCtP:"Each talent takes rate card inquiries through their own Instagram DM. Pick a talent, then tap the DM button on their profile.",homeCtBtn:"Choose a talent",
   stEye:"Home studio",stH:"Recording gear & setup",stPhoto:"Home studio / recording booth photo",gMic:"Microphone",gIf:"Audio interface",gHp:"Headphones",gPc:"Computer",gDaw:"DAW",gRoom:"Room treatment",gAcc:"Accessories",gFile:"File delivery",gSess:"Live-directed sessions",
   allSamples:"See all voice samples",allSamplesSub:"Full list on {p}",
@@ -78,7 +78,7 @@ const I18N={
   reelEye:"视频",reelH:"Reels 与公开视频",
   ctH:"咨询报价",ctP:"请直接通过 Instagram 私信联系演员。为便于快速回复，请附上：",
   ct1:"项目名称与平台",ct2:"需要配音的角色",ct3:"剧本时长与截止日期",
-  ctBtn:"Instagram 私信",ctCopy:"复制",ctNote:"不通过公开的 WhatsApp 接单。",ctNoIg:"该演员的 Instagram 尚未填写。",
+  ctBtn:"Instagram 私信",ctCopy:"复制",ctNoIg:"该演员的 Instagram 尚未填写。",
   homeCtH:"直接联系演员",homeCtP:"每位演员通过个人 Instagram 私信接受报价咨询。选择演员后，在其个人页面点击私信按钮。",homeCtBtn:"选择演员",
   stEye:"家庭录音室",stH:"录音设备与环境",stPhoto:"家庭录音室 / 录音棚照片",gMic:"麦克风",gIf:"音频接口",gHp:"耳机",gPc:"电脑",gDaw:"录音软件（DAW）",gRoom:"声学处理",gAcc:"配件",gFile:"交付格式",gSess:"远程实时导演录音",
   allSamples:"查看全部样音",allSamplesSub:"完整列表见 {p}",
@@ -178,7 +178,7 @@ function rosterBlock(){
 function directBlock(){
   return `<section class="band"><div class="wrap"><div class="contact">
    <div><h2>${t("homeCtH")}</h2><p>${t("homeCtP")}</p></div>
-   <div class="box"><a class="btn primary" href="/#talents">${t("homeCtBtn")}</a><span class="note">${t("ctNote")}</span></div>
+   <div class="box"><a class="btn primary" href="/#talents">${t("homeCtBtn")}</a></div>
   </div></div></section>`;
 }
 function contactBlock(x){
@@ -189,7 +189,7 @@ function contactBlock(x){
   return `<section class="band" id="contact"><div class="wrap"><div class="contact">
    <div><div class="eyebrow" style="color:var(--sun)">${esc(x.name)}</div><h2 style="margin-top:6px">${t("ctH")}</h2>
     <p>${t("ctP")}</p><ul><li>${t("ct1")}</li><li>${t("ct2")}</li><li>${t("ct3")}</li></ul></div>
-   <div class="box">${box}<span class="note">${t("ctNote")}</span></div>
+   <div class="box">${box}</div>
   </div></div></section>`;
 }
 
