@@ -39,7 +39,20 @@ function page(tpl, { route, title, desc, url, image, data, version }) {
   return tpl.replace(/\{\{(\w+)\}\}/g, (m, k) => (k in vals ? vals[k] : m));
 }
 
-const data = await loadData();
+// Isian "-" / "—" di form berarti kosong: buang supaya baris itu tidak tampil.
+const isDash = s => /^\s*[-–—.]+\s*$/.test(s);
+const isTr = o => Object.keys(o).length > 0 && Object.keys(o).every(k => ['id', 'en', 'zh'].includes(k));
+function clean(v) {
+  if (typeof v === 'string') return isDash(v) ? '' : v;
+  if (Array.isArray(v)) return v.map(clean).filter(x => x !== '' && x != null);
+  if (v && typeof v === 'object') {
+    const o = Object.fromEntries(Object.entries(v).map(([k, x]) => [k, clean(x)]));
+    return isTr(o) && Object.values(o).every(x => !x) ? null : o;
+  }
+  return v;
+}
+
+const data = clean(await loadData());
 data.talents = data.talents.filter(t => t && t.slug && slugOk(t.slug));
 const tpl = await readFile('site/template.html', 'utf8');
 const version = Date.now().toString(36);

@@ -134,7 +134,7 @@ function mediaOf(url){
   if((m=url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/))){const s=url.match(/[?&]t=(\d+)/);return{p:"youtube",id:m[1],embed:"https://www.youtube-nocookie.com/embed/"+m[1]+"?autoplay=1"+(s?"&start="+s[1]:"")}}
   if((m=url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]+)/)))return{p:"drive",id:m[1],embed:"https://drive.google.com/file/d/"+m[1]+"/preview"};
   if((m=url.match(/tiktok\.com\/.*\/video\/(\d+)/)))return{p:"tiktok",id:m[1],embed:"https://www.tiktok.com/player/v1/"+m[1]};
-  if((m=url.match(/instagram\.com\/(?:reel|reels|p)\/([\w-]+)/)))return{p:"instagram",id:m[1],embed:"https://www.instagram.com/reel/"+m[1]+"/embed"};
+  if((m=url.match(/instagram\.com\/(?:reel|reels|p)\/([\w-]+)/)))return{p:"instagram",id:m[1],embed:"https://www.instagram.com/p/"+m[1]+"/embed"};
   return null;
 }
 function openPlayer(title,frame,url,label,wide){

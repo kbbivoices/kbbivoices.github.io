@@ -315,7 +315,7 @@ function talentObj_(slug, r, T) {
     reel: str_(r[Q.reel]) ? { url: str_(r[Q.reel]) } : null,
     samples: samples,
     samplesAll: str_(r[Q.allS]) || null,
-    videos: str_(r[Q.vids]).split(/\s+/).filter(u => /^https?:\/\//.test(u)).slice(0, 6).map(u => ({ url: u })),
+    videos: str_(r[Q.vids]).split(/[\s,]+/).filter(u => /^https?:\/\//.test(u)).slice(0, 6).map(u => ({ url: u })),
     clients: list_(r[Q.clients]),
     community: list_(r[Q.comm]).map(n => ({ n: n })),
     studio: {
