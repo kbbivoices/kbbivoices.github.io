@@ -81,4 +81,25 @@ for (const t of data.talents) {
     url: `${SITE_URL}/talent/${t.slug}/`, image: t.photo, data, version,
   }));
 }
+// Link pendek ke Google Form: kbbivoices.github.io/profil, /portofolio
+const SHORT_LINKS = {
+  profil: ['KBBI – Profil Talent', 'Isi profil talent untuk website KBBI Voice Talent.',
+    'https://docs.google.com/forms/d/e/1FAIpQLSfC75eH5HPUzkjt7YLV9cT_u1hcty6FbrkLRt5slWajiJZIQQ/viewform'],
+  portofolio: ['KBBI – Tambah Portofolio', 'Tambahkan judul portofolio ke website KBBI Voice Talent.',
+    'https://docs.google.com/forms/d/e/1FAIpQLSfD5wzbG2X4NPGLe9FO7T6q3Qi-btYRw0JnFB3qAui639hmcA/viewform'],
+};
+for (const [path, [title, desc, target]] of Object.entries(SHORT_LINKS)) {
+  await mkdir(join(OUT, path), { recursive: true });
+  const t = escAttr(title), d = escAttr(desc), u = escAttr(target);
+  await writeFile(join(OUT, path, 'index.html'), `<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${t}</title><meta name="description" content="${d}">
+<meta property="og:title" content="${t}"><meta property="og:description" content="${d}"><meta property="og:url" content="${SITE_URL}/${path}/">
+<meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${u}">
+<script>location.replace(${JSON.stringify(target)})</script>
+<style>body{font-family:system-ui,sans-serif;background:#FFFBEA;color:#2A2416;display:grid;place-items:center;min-height:100vh;margin:0;padding:16px;text-align:center}a{color:#8A5A00}</style>
+</head><body><p>Membuka form…<br><a href="${u}">Klik di sini kalau tidak terbuka otomatis</a></p></body></html>
+`);
+}
+
 console.log(`Selesai: ${data.talents.length} talent, ${data.talents.reduce((n, t) => n + (t.works || []).length, 0)} portofolio → ${OUT}/`);
