@@ -264,7 +264,7 @@ function videosBlock(x){
   if(!x.videos.length)return "";
   return `<section class="band" style="padding-bottom:0"><div class="wrap"><div class="eyebrow">${t("vidEye")}</div><h2 class="sec-title">${t("vidH")}</h2>
    <div class="vgrid">${x.videos.map((v,i)=>{const m=mediaOf(v.url),p=PLAT[m?m.p:"link"];
-     const th=m&&m.p==="youtube"?bgImg("https://i.ytimg.com/vi/"+m.id+"/hqdefault.jpg"):"";
+     const th=v.img?bgImg(v.img):m&&m.p==="youtube"?bgImg("https://i.ytimg.com/vi/"+m.id+"/hqdefault.jpg"):"";
      return `<button type="button" class="vcard" data-video="${i}"><div class="vthumb" style="${th}"><span class="pf">${p.n}</span><span class="play">${ICON.play}</span></div><b>${v.title?esc(L(v.title)):t("video")+" "+(i+1)}</b><small>${p.n}</small></button>`}).join("")}</div></div></section>`;
 }
 function credsBlock(x){
