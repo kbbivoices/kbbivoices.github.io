@@ -175,7 +175,7 @@ function buildProfileForm_() {
   text_(f, Q.s3t, '');
   text_(f, Q.s3l, '');
   text_(f, Q.allS, 'Link Google Sheet atau folder Drive berisi semua voice sample-mu.');
-  para_(f, Q.vids, 'Satu link per baris, maksimal 6. Bisa YouTube, TikTok, Instagram Reels, atau Google Drive.');
+  para_(f, Q.vids, 'Satu video per baris, maksimal 6. Format: Judul | link. Judul boleh dikosongkan. Contoh: Kun Kun eps. 3 | https://youtu.be/xxxx. Bisa YouTube, TikTok, Instagram Reels, atau Google Drive.');
 
   page_(f, 'Home studio', 'Klien perlu yakin kualitas rekaman remote-mu.');
   text_(f, Q.mic, 'Pisahkan dengan koma kalau lebih dari satu. Contoh: Audio-Technica AT2035, Rode NT1');
@@ -315,7 +315,7 @@ function talentObj_(slug, r, T) {
     reel: str_(r[Q.reel]) ? { url: str_(r[Q.reel]) } : null,
     samples: samples,
     samplesAll: str_(r[Q.allS]) || null,
-    videos: str_(r[Q.vids]).split(/[\s,]+/).filter(u => /^https?:\/\//.test(u)).slice(0, 6).map(u => ({ url: u })),
+    videos: videos_(r[Q.vids], T),
     clients: list_(r[Q.clients]),
     community: list_(r[Q.comm]).map(n => ({ n: n })),
     studio: {
@@ -394,6 +394,16 @@ function str_(v) { return v == null ? '' : String(v).trim(); }
 function list_(v) { return str_(v).split(/\s*[,\n]\s*/).filter(Boolean); }
 function slugify_(s) {
   return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+/* Satu video per baris: "Judul | link" atau link saja. Judul opsional, boleh di depan atau di belakang link. */
+function videos_(v, T) {
+  const out = [];
+  str_(v).split(/\n+/).forEach(line => {
+    const urls = line.match(/https?:\/\/[^\s,|]+/g) || [];
+    const title = urls.length === 1 ? line.replace(urls[0], '').replace(/^[\s|,:;–—-]+|[\s|,:;–—-]+$/g, '') : '';
+    urls.forEach(u => out.push(title ? { url: u, title: T.all(title) } : { url: u }));
+  });
+  return out.slice(0, 6);
 }
 function img_(v) {
   const s = str_(v);

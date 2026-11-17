@@ -265,7 +265,7 @@ function videosBlock(x){
   return `<section class="band" style="padding-bottom:0"><div class="wrap"><div class="eyebrow">${t("vidEye")}</div><h2 class="sec-title">${t("vidH")}</h2>
    <div class="vgrid">${x.videos.map((v,i)=>{const m=mediaOf(v.url),p=PLAT[m?m.p:"link"];
      const th=m&&m.p==="youtube"?bgImg("https://i.ytimg.com/vi/"+m.id+"/hqdefault.jpg"):"";
-     return `<button type="button" class="vcard" data-video="${i}"><div class="vthumb" style="${th}"><span class="pf">${p.n}</span><span class="play">${ICON.play}</span></div><b>${t("video")} ${i+1}</b><small>${p.n}</small></button>`}).join("")}</div></div></section>`;
+     return `<button type="button" class="vcard" data-video="${i}"><div class="vthumb" style="${th}"><span class="pf">${p.n}</span><span class="play">${ICON.play}</span></div><b>${v.title?esc(L(v.title)):t("video")+" "+(i+1)}</b><small>${p.n}</small></button>`}).join("")}</div></div></section>`;
 }
 function credsBlock(x){
   if(!x.clients.length&&!x.community.length)return "";
@@ -347,7 +347,7 @@ document.getElementById("app").addEventListener("click",e=>{
   const sp=e.target.closest("[data-sample]");
   if(sp&&x){const s=x.samples[+sp.dataset.sample];if(s)openMedia(x.name+" · "+(s.raw?t("rawT"):L(s.title)),s.url);return}
   const vd=e.target.closest("[data-video]");
-  if(vd&&x){const v=x.videos[+vd.dataset.video];if(v)openMedia(x.name+" · "+t("video")+" "+(+vd.dataset.video+1),v.url);return}
+  if(vd&&x){const v=x.videos[+vd.dataset.video];if(v)openMedia(x.name+" · "+(v.title?L(v.title):t("video")+" "+(+vd.dataset.video+1)),v.url);return}
   const wk=e.target.closest("[data-work]");
   if(wk&&x){const w=x.works[+wk.dataset.work];if(w)openMedia(titleOf(w),w.link);return}
   const cp=e.target.closest("[data-copy]");
