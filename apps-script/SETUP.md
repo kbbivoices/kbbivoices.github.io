@@ -56,5 +56,8 @@ Setiap pengirim otomatis menerima email berisi **link untuk mengedit jawabannya*
 - Menjalankan **setup** lagi (akan ditolak, supaya tidak dobel).
 
 ## Kalau mengubah Code.gs nanti
+Form yang sudah ada tidak ikut berubah otomatis. Setelah menempel Code.gs baru, pilih fungsi **updateForms** → **Jalankan**
+untuk menyamakan pilihan Type cast dan teks bantuan di form.
+
 Setelah Save, buka **Deploy → Manage deployments → ikon pensil → Version: New version → Deploy**.
 Kalau langkah ini dilewati, alamat data tetap memakai kode lama.

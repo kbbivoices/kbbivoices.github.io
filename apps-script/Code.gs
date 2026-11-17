@@ -102,6 +102,27 @@ function showLinks() {
   Logger.log('Edit form Portofolio      : ' + fw.getEditUrl());
 }
 
+/* Samakan form yang sudah ada dengan kode ini: pilihan Type cast & teks bantuan.
+ * Aman dijalankan berkali-kali. Jawaban yang sudah masuk tidak berubah. */
+function updateForms() {
+  const p = PropertiesService.getScriptProperties();
+  const fp = FormApp.openById(p.getProperty('FORM_PROFILE'));
+  const fw = FormApp.openById(p.getProperty('FORM_PORTFOLIO'));
+  const done = [];
+  const find = (form, title) => form.getItems().find(i => i.getTitle() === title);
+  const help = (form, title, text) => {
+    const it = find(form, title);
+    if (it) { it.setHelpText(text); done.push('Keterangan "' + title + '"'); }
+  };
+  const cast = find(fw, P.cast);
+  if (cast) { cast.asMultipleChoiceItem().setChoiceValues(CASTS.map(c => c[1])); done.push('Pilihan "' + P.cast + '"'); }
+  help(fw, P.role, 'Nama karakter atau peran. Contoh: Yaya, Gadis 1, Narator. Untuk editor: yang dikerjakan, contoh: Cutting, subtitle, sync audio.');
+  help(fw, P.note, 'Opsional. Contoh: 8 episode, belum rilis, dry dubbing. Untuk editor: jumlah episode & software, contoh: 60 episode · CapCut');
+  help(fp, Q.vids, 'Satu video per baris, maksimal 10. Format: Judul | link video | link gambar sampul. Judul & gambar boleh dikosongkan (YouTube: sampul otomatis). Contoh: Kun Kun eps. 3 | https://youtu.be/xxxx. Bisa YouTube, TikTok, Instagram Reels, atau Google Drive.');
+  help(fp, Q.reel, 'Video/audio 60–90 detik berisi potongan terbaikmu. Tampil paling atas di profil. Mau pakai gambar sampul sendiri? Format: link video | link gambar (YouTube & video Drive: sampul otomatis).');
+  Logger.log('Diperbarui:\n- ' + done.join('\n- '));
+}
+
 function linkForm_(ss, form, name) {
   const before = ss.getSheets().map(s => s.getSheetId());
   form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
@@ -210,7 +231,7 @@ function buildPortfolioForm_() {
   text_(f, P.platform, 'Opsional. Contoh: Melolo, YouTube · LOF KUN Indonesia');
   text_(f, P.link, 'Opsional. Link YouTube/Drive bisa langsung diputar di website.');
   text_(f, P.img, 'Opsional. Screenshot karakter (potret/tegak lebih bagus). ' + DRIVE_HELP);
-  text_(f, P.note, 'Opsional. Contoh: 8 episode, belum rilis, dry dubbing');
+  text_(f, P.note, 'Opsional. Contoh: 8 episode, belum rilis, dry dubbing. Untuk editor: jumlah episode & software, contoh: 60 episode · CapCut');
   return f;
 }
 
