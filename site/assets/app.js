@@ -16,7 +16,7 @@ const I18N={
   how2b:"DM talent langsung",how2p:"Kirim judul proyek, karakter, durasi naskah, dan deadline ke Instagram talent yang dipilih.",
   how3b:"Rekam remote & kirim file",how3p:"Talent membalas dengan rate card, merekam dari tempatnya, lalu mengirim file audio secara online.",
   back:"Semua talent",sample:"Voice sample (Google Drive)",copy:"Salin link profil",copied:"Link profil disalin",copyFail:"Gagal menyalin. Salin dari address bar.",
-  pfEye:"Portofolio",pfH:"Karya",role:"Sebagai",watch:"Tonton ↗",pfEmpty:"Portofolio talent ini belum diisi. Data akan muncul otomatis setelah form diisi.",
+  pfEye:"Portofolio",pfH:"Karya",role:"Sebagai",roleEd:"Dikerjakan",watch:"Tonton ↗",pfEmpty:"Portofolio talent ini belum diisi. Data akan muncul otomatis setelah form diisi.",
   reelEye:"Video",reelH:"Reels & video publik",
   ctH:"Tanya rate card",ctP:"Kirim DM Instagram langsung ke talent. Agar cepat dibalas, sertakan:",
   ct1:"Judul proyek & platform",ct2:"Karakter yang akan diisi",ct3:"Durasi naskah & deadline",
@@ -45,7 +45,7 @@ const I18N={
   how2b:"DM the talent",how2p:"Send the project title, characters, script length and deadline to the talent's Instagram.",
   how3b:"Remote recording & delivery",how3p:"The talent replies with a rate card, records from their own setup and sends the audio files online.",
   back:"All talent",sample:"Voice sample (Google Drive)",copy:"Copy profile link",copied:"Profile link copied",copyFail:"Couldn't copy. Use the address bar.",
-  pfEye:"Portfolio",pfH:"Credits",role:"As",watch:"Watch ↗",pfEmpty:"This talent's portfolio is empty. Entries appear automatically once the form is filled in.",
+  pfEye:"Portfolio",pfH:"Credits",role:"As",roleEd:"Work done",watch:"Watch ↗",pfEmpty:"This talent's portfolio is empty. Entries appear automatically once the form is filled in.",
   reelEye:"Video",reelH:"Reels & public videos",
   ctH:"Ask for a rate card",ctP:"DM the talent directly on Instagram. For a quick reply, include:",
   ct1:"Project title & platform",ct2:"Characters to voice",ct3:"Script length & deadline",
@@ -74,7 +74,7 @@ const I18N={
   how2b:"私信演员",how2p:"通过 Instagram 将项目名称、角色、剧本时长和截止日期发给所选演员。",
   how3b:"远程录音并交付",how3p:"演员回复报价后远程录音，并在线发送音频文件。",
   back:"全部演员",sample:"样音（Google Drive）",copy:"复制个人页链接",copied:"链接已复制",copyFail:"复制失败，请从地址栏复制。",
-  pfEye:"作品",pfH:"配音作品",role:"角色",watch:"观看 ↗",pfEmpty:"该演员的作品尚未填写。填写表单后会自动显示。",
+  pfEye:"作品",pfH:"配音作品",role:"角色",roleEd:"负责",watch:"观看 ↗",pfEmpty:"该演员的作品尚未填写。填写表单后会自动显示。",
   reelEye:"视频",reelH:"Reels 与公开视频",
   ctH:"咨询报价",ctP:"请直接通过 Instagram 私信联系演员。为便于快速回复，请附上：",
   ct1:"项目名称与平台",ct2:"需要配音的角色",ct3:"剧本时长与截止日期",
@@ -89,7 +89,7 @@ const I18N={
   example:"示例",footNote:"报价请私信演员 Instagram",exampleTalent:"示例演员"}
 };
 const CATS={drama:{id:"Short Drama",en:"Short Drama",zh:"短剧"},animation:{id:"Animasi",en:"Animation",zh:"动画"},commercial:{id:"Commercial",en:"Commercial",zh:"商业配音"},audiobook:{id:"Audiobook & Dongeng",en:"Audiobook & Stories",zh:"有声书与故事"},interactive:{id:"Edukasi & Interaktif",en:"Educational & Interactive",zh:"教育与互动"},narration:{id:"Narasi",en:"Narration",zh:"旁白解说"}};
-const CAST={main:{id:"Pemeran Utama",en:"Main Character",zh:"主角"},support:{id:"Pemeran Pendukung",en:"Supporting",zh:"配角"},extra:{id:"Figuran",en:"Extra",zh:"群演"}};
+const CAST={main:{id:"Pemeran Utama",en:"Main Character",zh:"主角"},support:{id:"Pemeran Pendukung",en:"Supporting",zh:"配角"},extra:{id:"Figuran",en:"Extra",zh:"群演"},editor:{id:"Editor video",en:"Video editor",zh:"视频剪辑"}};
 /* ---- site logic: data comes from window.KBBI (built from the Google Sheet by scripts/build.mjs) ---- */
 Object.assign(I18N.id,{rawT:"Raw sample · tanpa editing",rawN:"Langsung dari mic, tanpa noise reduction & EQ",noTalents:"Profil talent sedang disiapkan.",nfH:"Halaman tidak ditemukan",nfP:"Link ini mungkin sudah berubah. Coba cari talent dari beranda.",nfBtn:"Ke beranda",video:"Video",syncYes:"Bisa rekam sambil menonton video (lip-sync dubbing)"});
 Object.assign(I18N.en,{rawT:"Raw sample · unedited",rawN:"Straight from the mic, no noise reduction or EQ",noTalents:"Talent profiles are on their way.",nfH:"Page not found",nfP:"This link may have changed. Find the talent from the home page.",nfBtn:"Go home",video:"Video",syncYes:"Can record to picture (lip-sync dubbing)"});
@@ -98,6 +98,7 @@ Object.assign(I18N.zh,{rawT:"原始样音 · 未剪辑",rawN:"麦克风直录，
 const KB=window.KBBI||{};
 const ROUTE=KB.route||"home";
 const TALENTS=((KB.data&&KB.data.talents)||[]).map(x=>Object.assign({works:[],samples:[],videos:[],tags:[],voice:[],skills:[],clients:[],community:[]},x));
+TALENTS.forEach(x=>{if(x.works.some(w=>w.cast==="editor")&&!x.tags.some(g=>g.k==="editor"))x.tags.push(Object.assign({k:"editor"},CAST.editor))});
 
 function initLang(){
   const q=new URLSearchParams(location.search).get("lang");if(q&&I18N[q])return q;
@@ -224,7 +225,7 @@ function workCard(w,k){
   return `<article class="pcard">${thumb}
    <div><div class="cat">${esc(L(CATS[w.cat]))}${w.platform?` · ${esc(w.platform)}`:""}</div>
    <h3>${esc(titleOf(w))}</h3>${orig}${w.note?`<div class="orig">${esc(L(w.note))}</div>`:""}</div>
-   <div class="role"><span>${t("role")}:</span> ${esc(L(w.role))}</div>
+   ${w.role?`<div class="role"><span>${t(w.cast==="editor"?"roleEd":"role")}:</span> ${esc(L(w.role))}</div>`:""}
    ${w.cast&&CAST[w.cast]?`<span class="cast ${w.cast}">${esc(L(CAST[w.cast]))}</span>`:""}
    ${watch}</article>`;
 }

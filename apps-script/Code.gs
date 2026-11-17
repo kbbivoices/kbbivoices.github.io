@@ -44,7 +44,7 @@ const CATS = [
   ['drama', 'Short Drama'], ['animation', 'Animasi'], ['commercial', 'Commercial'],
   ['audiobook', 'Audiobook & Dongeng'], ['interactive', 'Edukasi & Interaktif'], ['narration', 'Narasi'],
 ];
-const CASTS = [['main', 'Pemeran Utama'], ['support', 'Pemeran Pendukung'], ['extra', 'Figuran'], ['', 'Tidak ada (iklan / narasi)']];
+const CASTS = [['main', 'Pemeran Utama'], ['support', 'Pemeran Pendukung'], ['extra', 'Figuran'], ['editor', 'Editor video'], ['', 'Tidak ada (iklan / narasi)']];
 
 /* Terjemahan tetap untuk pilihan jawaban (lebih rapi dari terjemahan mesin). */
 const FIXED = {
@@ -205,7 +205,7 @@ function buildPortfolioForm_() {
   choice_(f, P.cat, '', CATS.map(c => c[1]), true);
   text_(f, P.title, 'Judul yang tayang (Bahasa Indonesia, atau judul aslinya kalau tidak ada versi Indonesia).', true);
   text_(f, P.orig, 'Opsional. Judul asli, misalnya judul Mandarin. Tampil di versi 中文 website.');
-  text_(f, P.role, 'Nama karakter atau peran. Contoh: Yaya, Gadis 1, Narator.', true);
+  text_(f, P.role, 'Nama karakter atau peran. Contoh: Yaya, Gadis 1, Narator. Untuk editor: yang dikerjakan, contoh: Cutting, subtitle, sync audio.', true);
   choice_(f, P.cast, '', CASTS.map(c => c[1]), true);
   text_(f, P.platform, 'Opsional. Contoh: Melolo, YouTube · LOF KUN Indonesia');
   text_(f, P.link, 'Opsional. Link YouTube/Drive bisa langsung diputar di website.');

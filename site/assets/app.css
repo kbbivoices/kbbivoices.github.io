@@ -149,6 +149,7 @@ section.band.alt{background:var(--sunk)}
 .cast{display:inline-flex;align-self:flex-start;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--line)}
 .cast.main{background:var(--sun);border-color:var(--sun);color:var(--on-sun)}
 .cast.support{background:var(--sunk)}
+.cast.editor{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 .pcard a.watch{font-size:13px;font-weight:700;color:var(--sun-ink);text-decoration:none}
 .pcard a.watch:hover{text-decoration:underline}
 .reels{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
