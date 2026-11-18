@@ -148,7 +148,7 @@ function openMedia(title,url){
   const m=mediaOf(url);
   if(!m){window.open(safeUrl(url),"_blank","noopener");return}
   const p=PLAT[m.p];
-  openPlayer(title,`<div class="frame ${p.f} live"><iframe src="${esc(m.embed)}" title="${esc(title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`,url,t("openOn").replace("{p}",p.n),p.f==="h");
+  openPlayer(title,`<div class="frame ${p.f} live"><iframe src="${esc(m.embed)}" title="${esc(title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen"></iframe></div>`,url,t("openOn").replace("{p}",p.n),p.f==="h");
 }
 function closePlayer(){const d=document.getElementById("player");d.innerHTML="";d.close?d.close():d.removeAttribute("open")}
 function miniWave(seed){let s="";for(let i=0;i<48;i++){const h=20+Math.abs(Math.sin((i+seed*7)*.6)*Math.cos(i*.23+seed))*80;s+=`<i style="height:${h.toFixed(0)}%"></i>`}return s}
