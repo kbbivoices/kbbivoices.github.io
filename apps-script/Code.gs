@@ -369,24 +369,43 @@ function workObj_(r, T) {
 
 /* ============================== HELPERS ============================== */
 
+/* Terjemahan otomatis, disimpan di tab "terjemahan" supaya tidak menerjemahkan ulang.
+ * Kalau terjemahan gagal (misalnya kuota harian Google habis), teks Indonesia dipakai sementara
+ * dan dicoba lagi pada pengambilan data berikutnya. Maks. TR_BUDGET panggilan per pengambilan
+ * supaya tidak melewati batas waktu Apps Script saat banyak data baru masuk sekaligus. */
+const TR_BUDGET = 400;
 function Translator_(sh) {
   this.sh = sh;
   this.map = {};
   this.added = [];
+  this.fixed = [];
+  this.budget = TR_BUDGET;
   const v = sh.getDataRange().getValues();
   for (let i = 1; i < v.length; i++) {
-    if (v[i][0] !== '') this.map[String(v[i][0])] = { en: String(v[i][1] || ''), zh: String(v[i][2] || '') };
+    if (v[i][0] !== '') this.map[String(v[i][0])] = { en: String(v[i][1] || ''), zh: String(v[i][2] || ''), row: i + 1 };
   }
 }
+Translator_.prototype.tr_ = function (s, to) {
+  if (this.budget <= 0) return '';
+  this.budget--;
+  return translate_(s, to);
+};
 Translator_.prototype.all = function (s) {
   s = str_(s);
   if (!s) return null;
   if (FIXED[s]) return { id: s, en: FIXED[s][0], zh: FIXED[s][1] };
   let m = this.map[s];
   if (!m) {
-    m = { en: translate_(s, 'en'), zh: translate_(s, 'zh-CN') };
+    m = { en: this.tr_(s, 'en'), zh: this.tr_(s, 'zh-CN') };
     this.map[s] = m;
-    this.added.push([s, m.en, m.zh]);
+    if (m.en || m.zh) { this.added.push([s, m.en, m.zh]); m.pending = true; }
+  } else if ((!m.en || !m.zh) && !m.pending && !m.tried) {
+    m.tried = true; // baris lama yang belum lengkap: coba lengkapi
+    const en = m.en || this.tr_(s, 'en'), zh = m.zh || this.tr_(s, 'zh-CN');
+    if ((en && en !== m.en) || (zh && zh !== m.zh)) {
+      m.en = en; m.zh = zh;
+      if (m.row) this.fixed.push([m.row, en, zh]);
+    }
   }
   return { id: s, en: m.en || s, zh: m.zh || s };
 };
@@ -395,7 +414,10 @@ Translator_.prototype.join = function (arr) {
   return { id: parts.map(p => p.id).join(', '), en: parts.map(p => p.en).join(', '), zh: parts.map(p => p.zh).join('、') };
 };
 Translator_.prototype.save = function () {
+  // Baris baru: hanya yang berhasil diterjemahkan (yang gagal akan dicoba lagi lain kali).
+  // Kolom yang gagal dibiarkan kosong, lalu dilengkapi pada pengambilan berikutnya.
   if (this.added.length) this.sh.getRange(this.sh.getLastRow() + 1, 1, this.added.length, 3).setValues(this.added);
+  this.fixed.forEach(([row, en, zh]) => this.sh.getRange(row, 2, 1, 2).setValues([[en, zh]]));
 };
 function translate_(s, to) {
   try { return LanguageApp.translate(s, '', to); } catch (e) { return ''; }

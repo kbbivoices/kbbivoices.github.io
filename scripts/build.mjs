@@ -54,6 +54,21 @@ function clean(v) {
 
 const data = clean(await loadData());
 data.talents = data.talents.filter(t => t && t.slug && slugOk(t.slug));
+// Label "Editor video" otomatis untuk talent yang punya portofolio editing (dipakai di kartu & filter beranda).
+const EDITOR_TAG = { k: 'editor', id: 'Editor video', en: 'Video editor', zh: '视频剪辑' };
+for (const t of data.talents) {
+  t.tags = t.tags || [];
+  if ((t.works || []).some(w => w.cast === 'editor') && !t.tags.some(g => g.k === 'editor')) t.tags.push(EDITOR_TAG);
+}
+// Supaya halaman tetap ringan walau talent & portofolio banyak:
+//   beranda / 404 → ringkasan semua talent (portofolio hanya kategori & type cast, untuk hitungan)
+//   halaman talent → data lengkap talent itu saja
+const summary = t => ({
+  slug: t.slug, name: t.name, ig: t.ig, photo: t.photo, tagline: t.tagline, tags: t.tags,
+  works: (t.works || []).map(w => ({ cat: w.cat, cast: w.cast })),
+});
+const homeData = { updated: data.updated, talents: data.talents.map(summary) };
+
 const tpl = await readFile('site/template.html', 'utf8');
 const version = Date.now().toString(36);
 const homeDesc = 'Kolektif pengisi suara Indonesia untuk dubbing short drama, animasi, commercial, audiobook, buku interaktif, dan narasi. Rekaman remote.';
@@ -65,10 +80,10 @@ await writeFile(join(OUT, 'data.json'), JSON.stringify(data));
 await writeFile(join(OUT, '.nojekyll'), '');
 
 await writeFile(join(OUT, 'index.html'), page(tpl, {
-  route: 'home', title: 'KBBI Voice Talent', desc: homeDesc, url: SITE_URL + '/', data, version,
+  route: 'home', title: 'KBBI Voice Talent', desc: homeDesc, url: SITE_URL + '/', data: homeData, version,
 }));
 await writeFile(join(OUT, '404.html'), page(tpl, {
-  route: 'notfound', title: 'Halaman tidak ditemukan · KBBI Voice Talent', desc: homeDesc, url: SITE_URL + '/', data, version,
+  route: 'notfound', title: 'Halaman tidak ditemukan · KBBI Voice Talent', desc: homeDesc, url: SITE_URL + '/', data: homeData, version,
 }));
 for (const t of data.talents) {
   const dir = join(OUT, 'talent', t.slug);
@@ -78,7 +93,7 @@ for (const t of data.talents) {
     route: 'talent:' + t.slug,
     title: `${t.name} · KBBI Voice Talent`,
     desc: tagline ? `${tagline}. Portofolio, voice sample & kontak.` : 'Portofolio, voice sample & kontak.',
-    url: `${SITE_URL}/talent/${t.slug}/`, image: t.photo, data, version,
+    url: `${SITE_URL}/talent/${t.slug}/`, image: t.photo, data: { updated: data.updated, talents: [t] }, version,
   }));
 }
 // Link pendek ke Google Form: kbbivoices.github.io/profil, /portofolio
