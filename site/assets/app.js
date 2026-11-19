@@ -91,12 +91,13 @@ const I18N={
 const CATS={drama:{id:"Short Drama",en:"Short Drama",zh:"短剧"},animation:{id:"Animasi",en:"Animation",zh:"动画"},commercial:{id:"Commercial",en:"Commercial",zh:"商业配音"},audiobook:{id:"Audiobook & Dongeng",en:"Audiobook & Stories",zh:"有声书与故事"},interactive:{id:"Edukasi & Interaktif",en:"Educational & Interactive",zh:"教育与互动"},narration:{id:"Narasi",en:"Narration",zh:"旁白解说"}};
 const CAST={main:{id:"Pemeran Utama",en:"Main Character",zh:"主角"},support:{id:"Pemeran Pendukung",en:"Supporting",zh:"配角"},extra:{id:"Figuran",en:"Extra",zh:"群演"},editor:{id:"Editor video",en:"Video editor",zh:"视频剪辑"}};
 /* ---- site logic: data comes from window.KBBI (built from the Google Sheet by scripts/build.mjs) ---- */
-Object.assign(I18N.id,{rawT:"Raw sample · tanpa editing",rawN:"Langsung dari mic, tanpa noise reduction & EQ",noTalents:"Profil talent sedang disiapkan.",nfH:"Halaman tidak ditemukan",nfP:"Link ini mungkin sudah berubah. Coba cari talent dari beranda.",nfBtn:"Ke beranda",video:"Video",syncYes:"Bisa rekam sambil menonton video (lip-sync dubbing)"});
-Object.assign(I18N.en,{rawT:"Raw sample · unedited",rawN:"Straight from the mic, no noise reduction or EQ",noTalents:"Talent profiles are on their way.",nfH:"Page not found",nfP:"This link may have changed. Find the talent from the home page.",nfBtn:"Go home",video:"Video",syncYes:"Can record to picture (lip-sync dubbing)"});
-Object.assign(I18N.zh,{rawT:"原始样音 · 未剪辑",rawN:"麦克风直录，无降噪与均衡处理",noTalents:"演员资料准备中。",nfH:"页面不存在",nfP:"链接可能已更改，请从首页查找演员。",nfBtn:"返回首页",video:"视频",syncYes:"可对画面录音（对口型配音）"});
+Object.assign(I18N.id,{soloSub:"Voice Talent",soloTitle:"Portofolio",rawT:"Raw sample · tanpa editing",rawN:"Langsung dari mic, tanpa noise reduction & EQ",noTalents:"Profil talent sedang disiapkan.",nfH:"Halaman tidak ditemukan",nfP:"Link ini mungkin sudah berubah. Coba cari talent dari beranda.",nfBtn:"Ke beranda",video:"Video",syncYes:"Bisa rekam sambil menonton video (lip-sync dubbing)"});
+Object.assign(I18N.en,{soloSub:"Voice Talent",soloTitle:"Portfolio",rawT:"Raw sample · unedited",rawN:"Straight from the mic, no noise reduction or EQ",noTalents:"Talent profiles are on their way.",nfH:"Page not found",nfP:"This link may have changed. Find the talent from the home page.",nfBtn:"Go home",video:"Video",syncYes:"Can record to picture (lip-sync dubbing)"});
+Object.assign(I18N.zh,{soloSub:"配音演员",soloTitle:"作品集",rawT:"原始样音 · 未剪辑",rawN:"麦克风直录，无降噪与均衡处理",noTalents:"演员资料准备中。",nfH:"页面不存在",nfP:"链接可能已更改，请从首页查找演员。",nfBtn:"返回首页",video:"视频",syncYes:"可对画面录音（对口型配音）"});
 
 const KB=window.KBBI||{};
 const ROUTE=KB.route||"home";
+const SOLO=ROUTE.startsWith("solo:");
 const TALENTS=((KB.data&&KB.data.talents)||[]).map(x=>Object.assign({works:[],samples:[],videos:[],tags:[],voice:[],skills:[],clients:[],community:[]},x));
 TALENTS.forEach(x=>{if(x.works.some(w=>w.cast==="editor")&&!x.tags.some(g=>g.k==="editor"))x.tags.push(Object.assign({k:"editor"},CAST.editor))});
 
@@ -291,9 +292,9 @@ function studioBlock(x){
 }
 function viewTalent(x){
   const cats=Object.keys(CATS).filter(c=>x.works.some(w=>w.cat===c));
-  return `<div class="wrap"><a class="back" href="/#talents">${ICON.back}${t("back")}</a>
+  return `<div class="wrap">${SOLO?'<div style="height:36px"></div>':`<a class="back" href="/#talents">${ICON.back}${t("back")}</a>`}
    <div class="profile"><div class="tphoto">${avatar(x)}</div>
-    <div><div class="eyebrow">KBBI · ${t("brandSub")}</div><h1>${esc(x.name)}</h1><p class="tagline">${esc(L(x.tagline))}</p>
+    <div><div class="eyebrow">${SOLO?t("soloSub"):"KBBI · "+t("brandSub")}</div><h1>${esc(x.name)}</h1><p class="tagline">${esc(L(x.tagline))}</p>
      ${x.avail?`<span class="avail"><i></i>${t("avail")}</span>`:""}
      ${x.bio?`<p class="bio">${esc(L(x.bio))}</p>`:""}
      <div class="chips">${x.tags.map(g=>`<span class="chip">${esc(L(g))}</span>`).join("")}</div>
@@ -314,11 +315,11 @@ function viewTalent(x){
 }
 
 /* ---- render & events ---- */
-const curTalent=()=>ROUTE.startsWith("talent:")?TALENTS.find(v=>v.slug===ROUTE.slice(7)):null;
+const curTalent=()=>ROUTE.startsWith("talent:")||SOLO?TALENTS.find(v=>v.slug===ROUTE.slice(ROUTE.indexOf(":")+1)):null;
 function render(){
   const app=document.getElementById("app");
   let nav="home";
-  if(ROUTE.startsWith("talent:")){const x=curTalent();app.innerHTML=x?viewTalent(x):viewNotFound();nav="talents";if(x)document.title=x.name+" · KBBI Voice Talent"}
+  if(ROUTE.startsWith("talent:")||SOLO){const x=curTalent();app.innerHTML=x?viewTalent(x):viewNotFound();nav="talents";if(x)document.title=x.name+(SOLO?" · "+t("soloTitle"):" · KBBI Voice Talent")}
   else if(ROUTE==="notfound"){app.innerHTML=viewNotFound()}
   else{app.innerHTML=viewHome();if(location.hash==="#talents")nav="talents";if(location.hash==="#how")nav="how"}
   document.querySelectorAll("nav.main a").forEach(a=>{if(a.dataset.route===nav)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});

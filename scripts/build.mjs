@@ -30,11 +30,28 @@ const escAttr = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<
 const jsonForScript = v => JSON.stringify(v).replace(/</g, '\\u003c').split('\u2028').join('\\u2028').split('\u2029').join('\\u2029');
 const slugOk = s => /^[a-z0-9-]+$/.test(s);
 
-function page(tpl, { route, title, desc, url, image, data, version }) {
+const MARK = '<span class="logo-mark" aria-hidden="true"><svg width="20" height="16" viewBox="0 0 20 16"><g fill="#221E12"><rect x="0" y="6" width="2.6" height="4" rx="1.3"/><rect x="4.3" y="3" width="2.6" height="10" rx="1.3"/><rect x="8.7" y="0" width="2.6" height="16" rx="1.3"/><rect x="13.1" y="4" width="2.6" height="8" rx="1.3"/><rect x="17.4" y="6.5" width="2.6" height="3" rx="1.3"/></g></svg></span>';
+const KBBI_BRAND = `    <a class="logo" href="/" aria-label="KBBI">
+      ${MARK}
+      <span><b>KBBI</b><small data-i="brandSub">Voice Talent Collective</small></span>
+    </a>
+    <nav class="main" aria-label="Menu">
+      <a href="/" data-route="home" data-i="navHome">Beranda</a>
+      <a href="/#talents" data-route="talents" data-i="navTalents">Talent</a>
+      <a href="/#how" data-route="how" data-i="navHow">Cara Booking</a>
+    </nav>`;
+
+// solo = nama talent → halaman mandiri: tanpa menu, tanpa merek KBBI.
+function page(tpl, { route, title, desc, url, image, data, version, solo }) {
+  const year = String(new Date().getFullYear());
   const vals = {
+    SITE_NAME: escAttr(solo || 'KBBI Voice Talent'),
+    BRAND: solo ? `    <span class="logo">${MARK}<span><b>${escAttr(solo)}</b><small data-i="soloSub">Voice Talent</small></span></span>` : KBBI_BRAND,
+    FOOT: solo ? `<span>© ${year} ${escAttr(solo)}</span><span data-i="footNote"></span>`
+      : `<span>© ${year} KBBI · <span data-i="brandSub">Voice Talent Collective</span></span><span data-i="footNote"></span>`,
     TITLE: escAttr(title), DESC: escAttr(desc), URL: escAttr(url),
     OG_IMAGE: image ? `<meta property="og:image" content="${escAttr(image)}">` : '',
-    ROUTE: JSON.stringify(route), DATA: jsonForScript(data), VERSION: version, YEAR: String(new Date().getFullYear()),
+    ROUTE: JSON.stringify(route), DATA: jsonForScript(data), VERSION: version, YEAR: year,
   };
   return tpl.replace(/\{\{(\w+)\}\}/g, (m, k) => (k in vals ? vals[k] : m));
 }
@@ -94,6 +111,15 @@ for (const t of data.talents) {
     title: `${t.name} · KBBI Voice Talent`,
     desc: tagline ? `${tagline}. Portofolio, voice sample & kontak.` : 'Portofolio, voice sample & kontak.',
     url: `${SITE_URL}/talent/${t.slug}/`, image: t.photo, data: { updated: data.updated, talents: [t] }, version,
+  }));
+  // Versi mandiri untuk dibagikan sendiri oleh talent: kbbivoices.github.io/p/<slug>/
+  const soloDir = join(OUT, 'p', t.slug);
+  await mkdir(soloDir, { recursive: true });
+  await writeFile(join(soloDir, 'index.html'), page(tpl, {
+    route: 'solo:' + t.slug,
+    title: `${t.name} · Portofolio`,
+    desc: tagline ? `${tagline}. Portofolio, voice sample & kontak.` : 'Portofolio, voice sample & kontak.',
+    url: `${SITE_URL}/p/${t.slug}/`, image: t.photo, data: { updated: data.updated, talents: [t] }, version, solo: t.name,
   }));
 }
 // Link pendek ke Google Form: kbbivoices.github.io/profil, /portofolio
