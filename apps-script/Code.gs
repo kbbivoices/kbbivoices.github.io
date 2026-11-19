@@ -120,6 +120,13 @@ function updateForms() {
   help(fw, P.note, 'Opsional. Contoh: 8 episode, belum rilis, dry dubbing. Untuk editor: jumlah episode & software, contoh: 60 episode · CapCut');
   help(fp, Q.vids, 'Satu video per baris, maksimal 10. Format: Judul | link video | link gambar sampul. Judul & gambar boleh dikosongkan (YouTube: sampul otomatis). Contoh: Kun Kun eps. 3 | https://youtu.be/xxxx. Bisa YouTube, TikTok, Instagram Reels, atau Google Drive.');
   help(fp, Q.reel, 'Video/audio 60–90 detik berisi potongan terbaikmu. Tampil paling atas di profil. Mau pakai gambar sampul sendiri? Format: link video | link gambar (YouTube & video Drive: sampul otomatis).');
+  fp.setDescription(DESC_PROFILE); fw.setDescription(DESC_PORTFOLIO); done.push('Deskripsi kedua form (catatan link & izin publikasi)');
+  [[fp, CONSENT_PROFILE], [fw, CONSENT_PORTFOLIO]].forEach(([form, text]) => {
+    const it = find(form, CONSENT_TITLE);
+    if (it) it.asCheckboxItem().setChoiceValues([text]).setRequired(true);
+    else consent_(form, text);
+    done.push('Pernyataan izin di form "' + form.getTitle() + '"');
+  });
   Logger.log('Diperbarui:\n- ' + done.join('\n- '));
 }
 
@@ -163,12 +170,28 @@ function choice_(f, t, help, opts, req, other) { const i = f.addMultipleChoiceIt
 function checks_(f, t, help, opts, req, other) { const i = f.addCheckboxItem().setTitle(t).setHelpText(help || '').setChoiceValues(opts).setRequired(!!req); if (other) i.showOtherOption(true); return i; }
 function page_(f, t, help) { f.addPageBreakItem().setTitle(t).setHelpText(help || ''); }
 
+const DISCLAIMER =
+  '⚠️ Sebelum mengisi:\n' +
+  '• Website ini hanya menyimpan LINK, bukan file. File tetap ada di Google Drive / YouTube / akun milikmu. Jaga sendiri file dan pengaturan aksesnya. Kalau file dihapus, dipindah, atau aksesnya ditutup, tampilannya di website ikut hilang.\n' +
+  '• Cek nama dan isi file sebelum membagikan link. Jangan sampai ada nomor HP, alamat, atau data pribadi lain.\n' +
+  '• Kirim hanya karya yang sudah boleh dipublikasikan: sudah tayang, atau sudah ada izin dari klien / production house. Karya di bawah NDA jangan dikirim tanpa izin.';
+const DESC_PROFILE =
+  'Isi profilmu untuk website KBBI. Cukup diisi sekali. Setelah dikirim, kamu menerima email berisi link untuk mengedit jawaban kapan saja.\n\n' +
+  'Semua link Google Drive harus bisa dibuka "Siapa saja yang memiliki link". Kolom yang tidak wajib boleh dikosongkan.\n\n' + DISCLAIMER;
+const DESC_PORTFOLIO =
+  'Satu pengiriman = satu judul. Kirim lagi untuk menambah judul berikutnya. Link edit dikirim ke email setelah submit.\n\n' + DISCLAIMER;
+const CONSENT_TITLE = 'Pernyataan';
+const CONSENT_PROFILE = 'Voice sample, video, foto, dan link yang saya kirim boleh dipublikasikan (sudah ada izin bila perlu), dan file-nya saya kelola sendiri.';
+const CONSENT_PORTFOLIO = 'Karya ini sudah boleh dipublikasikan (sudah tayang / sudah ada izin dari klien atau PH), dan file-nya saya kelola sendiri.';
+function consent_(f, text) {
+  return f.addCheckboxItem().setTitle(CONSENT_TITLE).setChoiceValues([text]).setRequired(true)
+    .setHelpText('Wajib dicentang. Website hanya menampilkan link; tanggung jawab atas isi dan izin publikasi ada pada pengirim.');
+}
+
 const DRIVE_HELP = 'Upload ke Google Drive → klik Bagikan → ubah akses jadi "Siapa saja yang memiliki link" → Salin link.';
 
 function buildProfileForm_() {
-  const f = baseForm_('KBBI – Profil Talent',
-    'Isi profilmu untuk website KBBI. Cukup diisi sekali. Setelah dikirim, kamu menerima email berisi link untuk mengedit jawaban kapan saja.\n\n' +
-    'Semua link Google Drive harus bisa dibuka "Siapa saja yang memiliki link". Kolom yang tidak wajib boleh dikosongkan.',
+  const f = baseForm_('KBBI – Profil Talent', DESC_PROFILE,
     'Terima kasih! Link untuk mengedit profil sudah dikirim ke email kamu. Profil tampil di website setelah dicek admin.');
 
   text_(f, Q.name, 'Dipakai di website dan link profil (contoh: Aini → …/talent-aini). Jangan diganti-ganti supaya link tidak berubah.', true);
@@ -214,12 +237,12 @@ function buildProfileForm_() {
   page_(f, 'Kredibilitas', '');
   text_(f, Q.clients, 'Pisahkan dengan koma. Tulis hanya yang boleh disebut (cek NDA / izin PH).');
   text_(f, Q.comm, 'Pelatihan, kelas, atau komunitas voice acting. Pisahkan dengan koma.');
+  consent_(f, CONSENT_PROFILE);
   return f;
 }
 
 function buildPortfolioForm_() {
-  const f = baseForm_('KBBI – Tambah Portofolio',
-    'Satu pengiriman = satu judul. Kirim lagi untuk menambah judul berikutnya. Link edit dikirim ke email setelah submit.',
+  const f = baseForm_('KBBI – Tambah Portofolio', DESC_PORTFOLIO,
     'Tersimpan! Judul ini tampil di website pada update berikutnya. Kirim lagi untuk menambah judul lain.');
   f.addListItem().setTitle(P.talent).setChoiceValues(CFG.defaultTalents).setRequired(true)
     .setHelpText('Namamu tidak ada? Isi dulu form Profil Talent.');
@@ -232,6 +255,7 @@ function buildPortfolioForm_() {
   text_(f, P.link, 'Opsional. Link YouTube/Drive bisa langsung diputar di website.');
   text_(f, P.img, 'Opsional. Screenshot karakter (potret/tegak lebih bagus). ' + DRIVE_HELP);
   text_(f, P.note, 'Opsional. Contoh: 8 episode, belum rilis, dry dubbing. Untuk editor: jumlah episode & software, contoh: 60 episode · CapCut');
+  consent_(f, CONSENT_PORTFOLIO);
   return f;
 }
 
