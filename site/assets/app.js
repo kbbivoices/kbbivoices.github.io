@@ -355,7 +355,7 @@ document.getElementById("app").addEventListener("click",e=>{
   if(wk&&x){const w=x.works[+wk.dataset.work];if(w)openMedia(titleOf(w),w.link);return}
   const cp=e.target.closest("[data-copy]");
   if(cp){
-    const text=cp.dataset.copy==="link"?location.origin+location.pathname:cp.dataset.copy;
+    const text=cp.dataset.copy==="link"&&x?location.origin+"/p/"+encodeURIComponent(x.slug)+"/":cp.dataset.copy;
     const ok=()=>toast(cp.dataset.copy==="link"?t("copied"):"✓ "+text);
     if(navigator.clipboard)navigator.clipboard.writeText(text).then(ok,()=>toast(t("copyFail")));else toast(t("copyFail"));
   }
